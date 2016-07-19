@@ -1,0 +1,25 @@
+{
+  "name": "redux-entities-reducer",
+  "version": "0.1.0",
+  "description": "A Redux reducer for handling hierarchical data structures",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape --require babel-register index.test.js",
+    "test:watch": "tape-watch --require babel-register index.test.js"
+  },
+  "author": "Artur Muller <me@arturmuller.com> (http://arturmuller.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "babel-register": "^6.9.0",
+    "eslint": "^3.1.0",
+    "tape": "^4.6.0",
+    "tape-watch": "^2.1.0"
+  },
+  "dependencies": {
+    "babel-core": "^6.10.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-2": "^6.11.0",
+    "ramda": "^0.21.0"
+  }
+}

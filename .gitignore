@@ -1,0 +1,8 @@
+# npm packages
+node_modules
+lib
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+*.log
