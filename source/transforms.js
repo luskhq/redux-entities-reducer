@@ -55,23 +55,6 @@ export const insertEntity = (collection, ownerId, entity, state) => {
   return transform(state)
 }
 
-export const insertEntityNormalize = (collection, ownerId, normalize, entity, state) => {
-  const transform = r.compose(
-    r.set(
-      r.lensPath(['lookupTable', entity.id]),
-      entity
-    ),
-    r.set(
-      (ownerId)
-        ? r.lensPath(['collections', ownerId, collection])
-        : r.lensPath(['collections', collection]),
-      r.uniq(r.concat(pluckIds([entity]), getCollectionIdsByOwner(collection, ownerId, state)))
-    ),
-  )
-
-  return transform(state)
-}
-
 export const removeEntity = (collection, ownerId, entityId, state) => {
   const transform = r.compose(
     r.set(
