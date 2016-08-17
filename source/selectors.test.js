@@ -22,6 +22,8 @@ test('getCollectionIdsByOwner', (t) => {
   t.deepEqual(result, expected)
 })
 
+test.todo('getCollectionIdsByOwner | Handle empty collection')
+
 test('getCollectionIdsByOwner', (t) => {
   const collection = 'users'
   const ownerId = null
