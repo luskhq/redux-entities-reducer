@@ -7,7 +7,7 @@
     "clean": "rimraf lib",
     "build": "babel source -d lib --ignore *.test.js",
     "test": "ava -r babel-register source/**/*.test.js",
-    "test:watch": "ava -rw babel-register source/**/*.test.js",
+    "test:watch": "ava -w -r babel-register source/**/*.test.js",
     "prepublish": "npm run clean && npm run build"
   },
   "author": "Artur Muller <me@arturmuller.com> (http://arturmuller.com)",
