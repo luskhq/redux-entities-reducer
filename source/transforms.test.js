@@ -1,23 +1,8 @@
 import test from 'ava'
-import {createLookupTable} from './transforms'
 import {pluckIds} from './transforms'
-import {transformReplaceEntities} from './transforms'
-import {transformInsertEntity} from './transforms'
-import {transformRemoveEntity} from './transforms'
-
-test('createLookupTable', (t) => {
-
-  const actual = createLookupTable(
-    ['123', '456'],
-    [{id: '123', name: 'John'}, {id: '456', name: 'Anna'}]
-  )
-  const expected = {
-    '123': {id: '123', name: 'John'},
-    '456': {id: '456', name: 'Anna'},
-  }
-
-  t.deepEqual(actual, expected)
-})
+import {replaceEntities} from './transforms'
+import {insertEntity} from './transforms'
+import {removeEntity} from './transforms'
 
 test('pluckIds', (t) => {
 
@@ -30,13 +15,13 @@ test('pluckIds', (t) => {
   t.deepEqual(actual, expected)
 })
 
-test('transformReplaceEntities | Should replace entities in the root if no owner is specified', (t) => {
+test('replaceEntities | Should replace entities in the root if no owner is specified', (t) => {
   const collection = 'users'
   const ownerId = null
   const entities = [{id: '123', name: 'John'}, {id: '456', name: 'Anna'}]
   const state = {lookupTable: {}}
 
-  const result = transformReplaceEntities(collection, ownerId, entities, state)
+  const result = replaceEntities(collection, ownerId, entities, state)
 
   const expected = {
     lookupTable: {
@@ -51,7 +36,7 @@ test('transformReplaceEntities | Should replace entities in the root if no owner
   t.deepEqual(result, expected)
 })
 
-test('transformReplaceEntities | Should replace entities at owner', (t) => {
+test('replaceEntities | Should replace entities at owner', (t) => {
   const collection = 'users'
   const ownerId = '666'
   const entities = [{id: '123', name: 'John'}, {id: '456', name: 'Anna'}]
@@ -61,7 +46,7 @@ test('transformReplaceEntities | Should replace entities at owner', (t) => {
     },
   }
 
-  const result = transformReplaceEntities(collection, ownerId, entities, state)
+  const result = replaceEntities(collection, ownerId, entities, state)
 
   const expected = {
     lookupTable: {
@@ -77,7 +62,7 @@ test('transformReplaceEntities | Should replace entities at owner', (t) => {
   t.deepEqual(result, expected)
 })
 
-test('transformInsertEntity | Returns state w/ single entity added to collection', (t) => {
+test('insertEntity | Returns state w/ single entity added to collection', (t) => {
   const collection = 'teams'
   const ownerId = null
   const entity = {id: '666', name: 'Team A'}
@@ -87,7 +72,7 @@ test('transformInsertEntity | Returns state w/ single entity added to collection
     },
   }
 
-  const result = transformInsertEntity(collection, ownerId, entity, state)
+  const result = insertEntity(collection, ownerId, entity, state)
 
   const expected = {
     lookupTable: {
@@ -102,7 +87,7 @@ test('transformInsertEntity | Returns state w/ single entity added to collection
   t.deepEqual(result, expected)
 })
 
-test('transformInsertEntity | Returns state w/ single entity added to owner collection', (t) => {
+test('insertEntity | Returns state w/ single entity added to owner collection', (t) => {
   const collection = 'users'
   const ownerId = '666'
   const entity = {id: '456', name: 'Alice'}
@@ -116,7 +101,7 @@ test('transformInsertEntity | Returns state w/ single entity added to owner coll
     },
   }
 
-  const result = transformInsertEntity(collection, ownerId, entity, state)
+  const result = insertEntity(collection, ownerId, entity, state)
 
   const expected = {
     lookupTable: {
@@ -133,7 +118,7 @@ test('transformInsertEntity | Returns state w/ single entity added to owner coll
   t.deepEqual(result, expected)
 })
 
-test('transformRemoveEntity | Returns state w/ single entity is removed from lookup table and collection', (t) => {
+test('removeEntity | Returns state w/ single entity is removed from lookup table and collection', (t) => {
   const collection = 'users'
   const ownerId = null
   const id = '123'
@@ -148,7 +133,7 @@ test('transformRemoveEntity | Returns state w/ single entity is removed from loo
     },
   }
 
-  const result = transformRemoveEntity(collection, ownerId, id, state)
+  const result = removeEntity(collection, ownerId, id, state)
 
   const expected = {
     lookupTable: {
@@ -163,7 +148,7 @@ test('transformRemoveEntity | Returns state w/ single entity is removed from loo
   t.deepEqual(result, expected)
 })
 
-test('transformRemoveEntity | Returns state w/ single entity is removed from lookup table and owner collection', (t) => {
+test('removeEntity | Returns state w/ single entity is removed from lookup table and owner collection', (t) => {
   const collection = 'users'
   const ownerId = '666'
   const entityId = '123'
@@ -179,7 +164,7 @@ test('transformRemoveEntity | Returns state w/ single entity is removed from loo
     },
   }
 
-  const result = transformRemoveEntity(collection, ownerId, entityId, state)
+  const result = removeEntity(collection, ownerId, entityId, state)
 
   const expected = {
     lookupTable: {

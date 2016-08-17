@@ -1,19 +1,13 @@
 import r from 'ramda'
-import {getCollectionIdsByOwner} from './selectors'
-import {getLookupTable} from './selectors'
 
 export const pluckIds = r.pluck('id')
-
-export const createLookupTable = r.zipObj
 
 export const mergeInto = r.flip(r.merge)
 
 export const replaceEntity = (entity, state) => {
-  const transform = r.compose(
-    r.over(
-      r.lensProp('lookupTable'),
-      mergeInto({[entity.id]: entity})
-    ),
+  const transform = r.over(
+    r.lensProp('lookupTable'),
+    mergeInto({[entity.id]: entity})
   )
 
   return transform(state)
@@ -31,7 +25,7 @@ export const replaceEntities = (collection, ownerId, entities, state) => {
     ),
     r.over(
       r.lensProp('lookupTable'),
-      mergeInto(createLookupTable(ids, entities))
+      mergeInto(r.zipObj(ids, entities))
     ),
   )
 
@@ -44,12 +38,15 @@ export const insertEntity = (collection, ownerId, entity, state) => {
       r.lensPath(['lookupTable', entity.id]),
       entity
     ),
-    r.set(
+    r.over(
       (ownerId)
         ? r.lensPath(['collections', ownerId, collection])
         : r.lensPath(['collections', collection]),
-      r.uniq(r.concat(pluckIds([entity]), getCollectionIdsByOwner(collection, ownerId, state)))
-    ),
+      r.compose(
+        r.uniq,
+        r.append(entity.id)
+      )
+    )
   )
 
   return transform(state)
@@ -57,15 +54,15 @@ export const insertEntity = (collection, ownerId, entity, state) => {
 
 export const removeEntity = (collection, ownerId, entityId, state) => {
   const transform = r.compose(
-    r.set(
+    r.over(
+      r.lensProp('lookupTable'),
+      r.omit(entityId)
+    ),
+    r.over(
       (ownerId)
         ? r.lensPath(['collections', ownerId, collection])
         : r.lensPath(['collections', collection]),
-      r.reject(r.equals(entityId), getCollectionIdsByOwner(collection, ownerId, state))
-    ),
-    r.set(
-      r.lensProp('lookupTable'),
-      r.omit(entityId, getLookupTable(state))
+      r.reject(r.equals(entityId))
     ),
   )
 
