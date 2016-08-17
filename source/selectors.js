@@ -1,22 +1,16 @@
-import r from 'ramda'
+import r from "ramda"
 
-export const getLookupTable = r.propOr({}, 'lookupTable')
+export const getLookupTable = r.propOr({}, "lookupTable")
 
-export const getCollectionIds = r.propOr([])
+export const getCollectionIds = r.curry((collection, owner, state) =>
+  r.pathOr([], ["collections", owner, collection], state)
+)
 
-export const getCollectionIdsByOwner = r.curry((collection, ownerId, state) => {
-  return (ownerId)
-    ? r.pathOr([], ['collections', ownerId, collection], state)
-    : r.pathOr([], ['collections', collection], state)
-})
+export const getEntity = r.curry((entityId, state) =>
+  r.propOr({notFound: true}, entityId, getLookupTable(state))
+)
 
-export const getEntity = r.curry((entityId, state) => {
-  return r.propOr({notFound: true}, entityId, getLookupTable(state))
-})
-
-export const getEntities = r.curry((collection, ownerId, state) => {
-  return r.map(
-    getEntity(r.__, state),
-    getCollectionIdsByOwner(collection, ownerId, state),
-  )
-})
+export const getEntities = r.curry((collection, ownerId, state) => r.map(
+  getEntity(r.__, state),
+  getCollectionIds(collection, ownerId, state),
+))

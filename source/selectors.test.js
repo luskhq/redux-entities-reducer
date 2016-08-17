@@ -1,47 +1,65 @@
-import test from 'ava'
-import {getCollectionIdsByOwner} from './selectors'
+import test from "ava"
+import {getLookupTable} from "./selectors"
+import {getCollectionIds} from "./selectors"
+import {getEntity} from "./selectors"
+import {getEntities} from "./selectors"
 
-test('getCollectionIdsByOwner', (t) => {
-  const collection = 'users'
-  const ownerId = '666'
-  const state = {
-    lookupTable: {
-      '123': {id: '123', name: 'John'},
-      '456': {id: '456', name: 'Alice'},
-      '666': {id: '666', name: 'Team A'},
-    },
-    collections: {
-      '666': {users: ['123', '456']},
-    },
-  }
-
-  const result = getCollectionIdsByOwner(collection, ownerId, state)
-
-  const expected = ['123', '456']
-
-  t.deepEqual(result, expected)
+const getState = () => ({
+  lookupTable: {
+    "123": {id: "123", name: "John"},
+    "456": {id: "456", name: "Alice"},
+    "666": {id: "666", name: "Team A"},
+  },
+  collections: {
+    "root": {teams: ["666"]},
+    "666": {users: ["123", "456"]},
+  },
 })
 
-test.todo('getCollectionIdsByOwner | Handle empty collection')
+test("getCollectionIds", (t) => {
+  const result1 = getCollectionIds("users", "666", getState())
+  const expected1 = ["123", "456"]
+  t.deepEqual(result1, expected1, "Returns correct list of ids")
 
-test('getCollectionIdsByOwner', (t) => {
-  const collection = 'users'
-  const ownerId = null
-  const state = {
-    lookupTable: {
-      '123': {id: '123', name: 'John'},
-      '456': {id: '456', name: 'Alice'},
-      '666': {id: '666', name: 'Team A'},
-    },
-    collections: {
-      users: ['123'],
-      '666': {users: ['456']},
-    },
+  const result2 = getCollectionIds("users", "???", getState())
+  const expected2 = []
+  t.deepEqual(result2, expected2, "Returns empty array when owner not found")
+
+  const result3 = getCollectionIds("???", "666", getState())
+  const expected3 = []
+  t.deepEqual(result3, expected3, "Returns empty array when collection not found")
+})
+
+test("getLookupTable", (t) => {
+  const result = getLookupTable(getState())
+  const expected = {
+    "123": {id: "123", name: "John"},
+    "456": {id: "456", name: "Alice"},
+    "666": {id: "666", name: "Team A"},
   }
+  t.deepEqual(result, expected, "Returns the lookupTable")
+})
 
-  const result = getCollectionIdsByOwner(collection, ownerId, state)
+test("getEntity", (t) => {
+  const result1 = getEntity("456", getState())
+  const expected1 = {id: "456", name: "Alice"}
+  t.deepEqual(result1, expected1, "Returns correct entity")
 
-  const expected = ['123']
+  const result2 = getEntity("???", getState())
+  const expected2 = {notFound: true}
+  t.deepEqual(result2, expected2, "Returns notFound object when entity not found")
+})
 
-  t.deepEqual(result, expected)
+test("getEntities", (t) => {
+  const result1 = getEntities("users", "666", getState())
+  const expected1 = [{id: "123", name: "John"}, {id: "456", name: "Alice"}]
+  t.deepEqual(result1, expected1, "Return correct list of entities")
+
+  const result2 = getEntities("???", "666", getState())
+  const expected2 = []
+  t.deepEqual(result2, expected2, "Returns empty array when collection not found")
+
+  const result3 = getEntities("users", "???", getState())
+  const expected3 = []
+  t.deepEqual(result3, expected3, "Returns empty array when owner not found")
 })
