@@ -1,8 +1,12 @@
-# npm packages
+# npm stuff
 node_modules
+*.log
+
+# built files
 lib
+
+# OS junk
 .DS_Store
 ._*
 .Spotlight-V100
 .Trashes
-*.log
