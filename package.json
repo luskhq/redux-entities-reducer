@@ -1,6 +1,6 @@
 {
   "name": "@lusk/redux-entities-reducer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Redux reducer for handling entities",
   "main": "lib/index.js",
   "scripts": {
