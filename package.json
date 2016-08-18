@@ -1,7 +1,30 @@
 {
   "name": "@lusk/redux-entities-reducer",
-  "version": "0.1.4",
   "description": "A Redux reducer for handling entities",
+  "version": "0.1.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luskhq/redux-entities-reducer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luskhq/redux-entities-reducer/issues"
+  },
+  "homepage": "https://github.com/luskhq/redux-entities-reducer",
+  "author": "Artur Muller <me@arturmuller.com> (http://arturmuller.com)",
+  "contributors": [{
+    "name": "Pavel Volek",
+    "email": "me@pavelvolek.cz"
+  },{
+    "name": "Artur Muller",
+    "email": "me@arturmuller.com",
+    "web": "http://arturmuller.com"
+  }],
+  "license": "ISC",
+  "keywords": [
+    "redux",
+    "reducer",
+    "entities"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
@@ -10,8 +33,6 @@
     "test:watch": "ava -w -r babel-register source/**/*.test.js",
     "prepublish": "npm run clean && npm run build"
   },
-  "author": "Artur Muller <me@arturmuller.com> (http://arturmuller.com)",
-  "license": "ISC",
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-core": "^6.10.4",
