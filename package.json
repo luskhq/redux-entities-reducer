@@ -1,7 +1,7 @@
 {
   "name": "@lusk/redux-entities-reducer",
   "description": "A Redux reducer for handling entities",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/luskhq/redux-entities-reducer.git"
@@ -11,14 +11,17 @@
   },
   "homepage": "https://github.com/luskhq/redux-entities-reducer",
   "author": "Artur Muller <me@arturmuller.com> (http://arturmuller.com)",
-  "contributors": [{
-    "name": "Pavel Volek",
-    "email": "me@pavelvolek.cz"
-  },{
-    "name": "Artur Muller",
-    "email": "me@arturmuller.com",
-    "web": "http://arturmuller.com"
-  }],
+  "contributors": [
+    {
+      "name": "Pavel Volek",
+      "email": "me@pavelvolek.cz"
+    },
+    {
+      "name": "Artur Muller",
+      "email": "me@arturmuller.com",
+      "web": "http://arturmuller.com"
+    }
+  ],
   "license": "ISC",
   "keywords": [
     "redux",
