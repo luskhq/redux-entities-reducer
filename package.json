@@ -47,6 +47,7 @@
     "babel-preset-stage-2": "^6.11.0",
     "babel-register": "^6.11.6",
     "eslint": "^3.1.0",
+    "eslint-config-lusk": "^0.1.0",
     "rimraf": "^2.5.4"
   },
   "dependencies": {
