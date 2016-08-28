@@ -26,7 +26,7 @@ test("replaceEntities", (t) => {
     },
   }
 
-  t.deepEqual(result, expected, "Replces entities at owner")
+  t.deepEqual(result, expected, "Replaces entities at owner")
 })
 
 test("insertEntity", (t) => {
