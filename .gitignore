@@ -3,7 +3,7 @@ node_modules
 *.log
 
 # built files
-lib
+dist
 
 # OS junk
 .DS_Store

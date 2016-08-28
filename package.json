@@ -28,10 +28,10 @@
     "reducer",
     "entities"
   ],
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "clean": "rimraf lib",
-    "build": "babel source -d lib --ignore *.test.js",
+    "clean": "rimraf dist",
+    "build": "babel source -d dist --ignore *.test.js",
     "build:watch": "nodemon -w source -x \"npm run build\"",
     "test": "ava -r babel-register source/**/*.test.js",
     "test:watch": "ava -w -r babel-register source/**/*.test.js",
