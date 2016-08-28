@@ -71,7 +71,7 @@ test("removeEntity", (t) => {
       "666": {id: "666", name: "Team A"},
     },
     collections: {
-      users: ["456"],
+      root: {teams: ["666"]},
       "666": {users: ["123"]},
     },
   }
@@ -84,7 +84,7 @@ test("removeEntity", (t) => {
       "666": {id: "666", name: "Team A"},
     },
     collections: {
-      users: ["456"],
+      root: {teams: ["666"]},
       "666": {users: []},
     },
   }
