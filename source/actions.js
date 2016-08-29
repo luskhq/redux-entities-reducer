@@ -19,7 +19,7 @@ export const insertEntity = r.curry((collection, ownerId, entity) => ({
   payload: {collection, ownerId, entity},
 }))
 
-export const removeEntity = r.curry((collection, ownerId, entityId) => ({
+export const removeEntity = r.curry((collection, ownerId, entity) => ({
   type: "entities/removeEntity",
-  payload: {collection, ownerId, entityId},
+  payload: {collection, ownerId, entity},
 }))

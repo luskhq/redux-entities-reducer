@@ -63,7 +63,7 @@ test("insertEntity", (t) => {
 test("removeEntity", (t) => {
   const collection = "users"
   const ownerId = "666"
-  const entityId = "123"
+  const entity = {id: "123"}
   const state = {
     lookupTable: {
       "123": {id: "123", name: "John"},
@@ -76,7 +76,7 @@ test("removeEntity", (t) => {
     },
   }
 
-  const result = removeEntity(collection, ownerId, entityId, state)
+  const result = removeEntity(collection, ownerId, entity, state)
 
   const expected = {
     lookupTable: {

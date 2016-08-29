@@ -53,17 +53,17 @@ test("insertEntity", (t) => {
 })
 
 test("removeEntity", (t) => {
-  const result = removeEntity("users", "666", "123")
+  const result = removeEntity("users", "666", {id: "123"})
   const expected = {
     type: "entities/removeEntity",
     payload: {
       collection: "users",
       ownerId: "666",
-      entityId: "123",
+      entity: {id: "123"},
     },
   }
   t.deepEqual(result, expected, "Returns correct action object")
 
-  const result2 = removeEntity("users")("666")("123")
+  const result2 = removeEntity("users")("666")({id: "123"})
   t.deepEqual(result2, expected, "Is curried")
 })
