@@ -1,7 +1,7 @@
 {
   "name": "@lusk/redux-entities-reducer",
   "description": "A Redux reducer for handling entities",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/luskhq/redux-entities-reducer.git"
