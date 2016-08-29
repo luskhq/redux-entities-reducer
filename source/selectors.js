@@ -10,7 +10,12 @@ export const getEntity = r.curry((entityId, state) =>
   r.propOr({notFound: true}, entityId, getLookupTable(state))
 )
 
-export const getEntities = r.curry((collection, ownerId, state) => r.map(
-  getEntity(r.__, state),
-  getCollectionIds(collection, ownerId, state),
-))
+export const getEntities = r.curry((collection, ownerId, state) =>
+  r.reject(
+    r.prop("notFound"),
+    r.map(
+      getEntity(r.__, state),
+      getCollectionIds(collection, ownerId, state)
+    )
+  )
+)

@@ -12,13 +12,13 @@ const getState = () => ({
   },
   collections: {
     "root": {teams: ["666"]},
-    "666": {users: ["123", "456"]},
+    "666": {users: ["123", "456", "???"]},
   },
 })
 
 test("getCollectionIds", (t) => {
   const result1 = getCollectionIds("users", "666", getState())
-  const expected1 = ["123", "456"]
+  const expected1 = ["123", "456", "???"]
   t.deepEqual(result1, expected1, "Returns correct list of ids")
 
   const result2 = getCollectionIds("users", "???", getState())
@@ -53,7 +53,7 @@ test("getEntity", (t) => {
 test("getEntities", (t) => {
   const result1 = getEntities("users", "666", getState())
   const expected1 = [{id: "123", name: "John"}, {id: "456", name: "Alice"}]
-  t.deepEqual(result1, expected1, "Return correct list of entities")
+  t.deepEqual(result1, expected1, "Return correct list of entities without those not found")
 
   const result2 = getEntities("???", "666", getState())
   const expected2 = []
@@ -62,4 +62,5 @@ test("getEntities", (t) => {
   const result3 = getEntities("users", "???", getState())
   const expected3 = []
   t.deepEqual(result3, expected3, "Returns empty array when owner not found")
+
 })
