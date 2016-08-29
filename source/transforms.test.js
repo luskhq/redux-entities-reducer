@@ -60,7 +60,7 @@ test("insertEntity", (t) => {
   t.deepEqual(result, expected, "Adds entity to owner's collection")
 })
 
-test("removeEntity", (t) => {
+test.failing("removeEntity", (t) => {
   const collection = "users"
   const ownerId = "666"
   const entity = {id: "123"}
@@ -90,4 +90,23 @@ test("removeEntity", (t) => {
   }
 
   t.deepEqual(result, expected, "Removes entity from lookup table and owner's collection")
+
+  const result2 = removeEntity(collection, ownerId, {id: "???"}, state)
+  const expected2 = state
+
+  t.deepEqual(result2, expected2, "Removing an entity that has not been found should be a no op")
+
+  const result3 = removeEntity(collection, "???", {id: "123"}, state)
+  const expected3 = {
+    lookupTable: {
+      "456": {id: "456", name: "Alice"},
+      "666": {id: "666", name: "Team A"},
+    },
+    collections: {
+      root: {teams: ["666"]},
+      "666": {users: ["123"]},
+    },
+  }
+
+  t.deepEqual(result3, expected3, "Removing an entity at unknown owner should still remove it from lookupTable")
 })
