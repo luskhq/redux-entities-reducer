@@ -60,7 +60,7 @@ test("insertEntity", (t) => {
   t.deepEqual(result, expected, "Adds entity to owner's collection")
 })
 
-test.failing("removeEntity", (t) => {
+test("removeEntity", (t) => {
   const collection = "users"
   const ownerId = "666"
   const entity = {id: "123"}

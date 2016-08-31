@@ -40,9 +40,12 @@ export const insertEntity = (collection, ownerId, entity, state) => {
 export const removeEntity = (collection, ownerId, entity, state) => {
   const transform = r.compose(
     r.over(r.lensProp("lookupTable"), r.omit(id(entity))),
-    r.over(
-      r.lensPath(["collections", ownerId, collection]),
-      r.reject(r.equals(id(entity)))
+    r.when(
+      r.path(["collections", ownerId, collection]),
+      r.over(
+        r.lensPath(["collections", ownerId, collection]),
+        r.reject(r.equals(id(entity)))
+      )
     ),
   )
 
