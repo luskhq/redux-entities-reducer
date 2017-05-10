@@ -1,4 +1,5 @@
 import test from "ava"
+import {appendEntities} from "./transforms"
 import {replaceEntities} from "./transforms"
 import {insertEntity} from "./transforms"
 import {removeEntity} from "./transforms"
@@ -27,6 +28,36 @@ test("replaceEntities", (t) => {
   }
 
   t.deepEqual(result, expected, "Replaces entities at owner")
+})
+
+test("appendEntities", (t) => {
+  const collection = "users"
+  const ownerId = "666"
+  const entities = [{id: "456", name: "Anna"}]
+  const state = {
+    lookupTable: {
+      "123": {id: "123", name: "John"},
+      "666": {id: "666", name: "Team A"},
+    },
+    collections: {
+      "666": {users: ["123"]},
+    },
+  }
+
+  const result = appendEntities(collection, ownerId, entities, state)
+
+  const expected = {
+    lookupTable: {
+      "123": {id: "123", name: "John"},
+      "456": {id: "456", name: "Anna"},
+      "666": {id: "666", name: "Team A"},
+    },
+    collections: {
+      "666": {users: ["123", "456"]},
+    },
+  }
+
+  t.deepEqual(result, expected, "Appends entities at owner")
 })
 
 test("insertEntity", (t) => {

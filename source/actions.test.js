@@ -3,6 +3,7 @@ import {clearState} from "./actions"
 import {replaceEntities} from "./actions"
 import {replaceEntity} from "./actions"
 import {insertEntity} from "./actions"
+import {insertEntities} from "./actions"
 import {removeEntity} from "./actions"
 
 test("clearState", (t) => {
@@ -49,6 +50,22 @@ test("insertEntity", (t) => {
   t.deepEqual(result, expected, "Returns correct action object")
 
   const result2 = insertEntity("users")("666")({id: "123", name: "John"})
+  t.deepEqual(result2, expected, "Is curried")
+})
+
+test("insertEntities", (t) => {
+  const result = insertEntities("users", "666", [{id: "123", name: "John"}])
+  const expected = {
+    type: "entities/insertEntities",
+    payload: {
+      collection: "users",
+      ownerId: "666",
+      entities: [{id: "123", name: "John"}],
+    },
+  }
+  t.deepEqual(result, expected, "Returns correct action object")
+
+  const result2 = insertEntities("users")("666")([{id: "123", name: "John"}])
   t.deepEqual(result2, expected, "Is curried")
 })
 

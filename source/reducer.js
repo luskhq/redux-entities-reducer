@@ -17,6 +17,9 @@ const reduceEntities = (state = initialState, {type, payload}) => {
     case "entities/insertEntity":
       return transforms.insertEntity(payload.collection, payload.ownerId, payload.entity, state)
 
+    case "entities/insertEntities":
+      return transforms.insertEntities(payload.collection, payload.ownerId, payload.entities, state)
+
     case "entities/removeEntity":
       return transforms.removeEntity(payload.collection, payload.ownerId, payload.entity, state)
 

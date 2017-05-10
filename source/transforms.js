@@ -7,6 +7,7 @@ export const ids = r.pluck("id")
 export const indexById = r.indexBy(r.prop("id"))
 
 export const mergeInto = r.flip(r.merge)
+export const append = r.flip(r.append)
 
 export const replaceEntity = (entity, state) => {
   const transform = r.over(
@@ -31,6 +32,17 @@ export const insertEntity = (collection, ownerId, entity, state) => {
     r.set(r.lensPath(["lookupTable", id(entity)]), entity),
     r.over(r.lensPath(["collections", ownerId, collection]), r.compose(
       r.uniq, r.append(id(entity))
+    ))
+  )
+
+  return transform(state)
+}
+
+export const insertEntities = (collection, ownerId, entities, state) => {
+  const transform = r.compose(
+    r.over(r.lensProp("lookupTable"), mergeInto(indexById(entities))),
+    r.over(r.lensPath(["collections", ownerId, collection]), r.compose(
+      r.uniq, r.flatten, r.append(ids(entities))
     ))
   )
 
